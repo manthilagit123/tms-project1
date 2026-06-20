@@ -10,4 +10,8 @@ const server = http.createServer(app);
 const io = initSocketServer(server);
 registerSocketAuth(io);
 
+io.on('connection', (socket) => {
+  socket.join(`user:${socket.user.id}`);
+});
+
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
