@@ -22,5 +22,29 @@ async function createTask({ title, description, due_date, priority, assignees, a
 
     return { ...task, assignees };
 }
+async function listTasks({ status, priority, sortBy = 'due_date', order = 'asc', page = 1, limit = 20 }, requester) {
+    let query = supabase
+        .from('Tasks')
+        .select('*, TaskAssignments(user_id)', { count: 'exact' })
+        .order(sortBy, { ascending: order === 'asc' })
+        .range((page - 1) * limit, page * limit - 1);
 
-module.exports = { createTask };
+    if (status) query = query.eq('status', status);
+    if (priority) query = query.eq('priority', priority);
+
+    const { data, count } = await query;
+
+    const filtered = requester.role === 'Collaborator'
+        ? data.filter((t) => t.TaskAssignments.some((a) => a.user_id === requester.id))
+        : data;
+
+    return { data: filtered, total: count };
+}
+async function updateTask(taskId, updates) {
+    const { data, error } = await supabase.from('Tasks').update(updates).eq('id', taskId).select().single();
+    if (error) throw new ApiError(400, error.message);
+    if (!data) throw new ApiError(404, 'Task not found');
+    return data;
+}
+
+module.exports = { createTask, listTasks, updateTask };
