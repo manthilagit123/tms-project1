@@ -56,5 +56,12 @@ async function updateStatus(taskId, status, requester) {
     if (error) throw new ApiError(400, error.message);
     return data;
 }
+async function deleteTask(taskId) {
+    await supabase.from('TaskAssignments').delete().eq('task_id', taskId);
+    await supabase.from('Comments').delete().eq('task_id', taskId);
+    await supabase.from('Attachments').delete().eq('task_id', taskId);
+    const { error } = await supabase.from('Tasks').delete().eq('id', taskId);
+    if (error) throw new ApiError(400, error.message);
+}
 
-module.exports = { createTask, listTasks, updateTask, updateStatus };
+module.exports = { createTask, listTasks, updateTask, updateStatus, deleteTask };
