@@ -2,6 +2,7 @@ jest.mock('../../src/config/db');
 const supabase = require('../../src/config/db');
 const { createUser, listUsers } = require('../../src/modules/users/users.service');
 const { updateUser } = require('../../src/modules/users/users.service');
+const { deactivateUser } = require('../../src/modules/users/users.service');
 
 test('createUser succeeds and excludes password from response', async () => {
   let insertedValues = null;
@@ -64,4 +65,18 @@ test('updateUser throws 404 when target id does not exist', async () => {
     update: () => ({ eq: () => ({ select: () => ({ maybeSingle: async () => ({ data: null, error: null }) }) }) }),
   });
   await expect(updateUser('nonexistent-id', { name: 'X' })).rejects.toMatchObject({ status: 404 });
+});
+
+test('deactivateUser succeeds for an existing user', async () => {
+  supabase.from = () => ({
+    update: () => ({ eq: () => ({ select: () => ({ maybeSingle: async () => ({ data: { id: 1, is_active: false }, error: null }) }) }) }),
+  });
+  await expect(deactivateUser(1)).resolves.toBeUndefined();
+});
+
+test('deactivateUser throws 404 for a non-existent user', async () => {
+  supabase.from = () => ({
+    update: () => ({ eq: () => ({ select: () => ({ maybeSingle: async () => ({ data: null, error: null }) }) }) }),
+  });
+  await expect(deactivateUser('nonexistent-id')).rejects.toMatchObject({ status: 404 });
 });

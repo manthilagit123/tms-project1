@@ -27,4 +27,11 @@ async function updateUserHandler(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { createUserHandler, listUsersHandler, updateUserHandler };
+async function deactivateUserHandler(req, res, next) {
+  try {
+    await usersService.deactivateUser(req.params.id);
+    res.json({ message: 'User deactivated successfully' });
+  } catch (err) { next(err); }
+}
+
+module.exports = { createUserHandler, listUsersHandler, updateUserHandler, deactivateUserHandler };

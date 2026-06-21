@@ -38,4 +38,10 @@ async function updateUser(targetId, updates) {
   return data;
 }
 
-module.exports = { createUser, listUsers, updateUser };
+async function deactivateUser(targetId) {
+  const { data, error } = await supabase.from('Users').update({ is_active: false }).eq('id', targetId).select().maybeSingle();
+  if (error) throw new ApiError(400, error.message);
+  if (!data) throw new ApiError(404, 'User not found');
+}
+
+module.exports = { createUser, listUsers, updateUser, deactivateUser };
