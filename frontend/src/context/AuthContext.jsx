@@ -1,18 +1,38 @@
-// ⚠️ TEMPORARY STUB — DO NOT MERGE TO MAIN.
-// Replace with Person 4's real implementation when feature/frontend-auth-admin merges to develop.
-// Contract: useAuth() -> { user: { id, name, role } | null, loading, login, logout }
-import { createContext, useContext, useState } from 'react';
+
+import { createContext, useContext, useState, useEffect } from 'react';
+import { loginRequest } from '../api/authApi';
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  // Hardcode a fake logged-in user so you can build task UI without waiting on real login.
-  // Temporarily change `role` below to test PM/Admin-only views during development.
-  const [user] = useState({ id: '33333333-3333-3333-3333-333333333333', name: 'Collaborator One', role: 'Collaborator' });
-  return (
-    <AuthContext.Provider value={{ user, loading: false, login: async () => user, logout: () => {} }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    const [user, setUser] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        // Only non-sensitive display info is persisted client-side — the actual
+        // JWT lives in an httpOnly cookie and is never readable from JS.
+        const stored = sessionStorage.getItem('user');
+        if (stored) setUser(JSON.parse(stored));
+        setLoading(false);
+    }, []);
+
+    async function login(email, password) {
+        const data = await loginRequest(email, password);
+        setUser(data);
+        sessionStorage.setItem('user', JSON.stringify(data));
+        return data;
+    }
+
+    function logout() {
+        setUser(null);
+        sessionStorage.removeItem('user');
+    }
+
+    return (
+        <AuthContext.Provider value={{ user, login, logout, loading }}>
+            {children}
+        </AuthContext.Provider>
+    );
 }
+
 export const useAuth = () => useContext(AuthContext);
