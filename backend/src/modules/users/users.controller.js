@@ -7,4 +7,17 @@ async function createUserHandler(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { createUserHandler };
+async function listUsersHandler(req, res, next) {
+  try {
+    const { search, role, page, limit } = req.query;
+    const result = await usersService.listUsers({
+      search,
+      role,
+      page: page ? parseInt(page) : undefined,
+      limit: limit ? parseInt(limit) : undefined,
+    });
+    res.json(result);
+  } catch (err) { next(err); }
+}
+
+module.exports = { createUserHandler, listUsersHandler };

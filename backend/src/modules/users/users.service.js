@@ -23,4 +23,12 @@ async function createUser({ name, email, role }) {
   return user;
 }
 
-module.exports = { createUser };
+async function listUsers({ search, role, page = 1, limit = 20 }) {
+  let query = supabase.from('Users').select('id, name, email, role, is_active', { count: 'exact' });
+  if (search) query = query.or(`name.ilike.%${search}%,email.ilike.%${search}%`);
+  if (role) query = query.eq('role', role);
+  const { data, count } = await query.range((page - 1) * limit, page * limit - 1);
+  return { data, total: count };
+}
+
+module.exports = { createUser, listUsers };
