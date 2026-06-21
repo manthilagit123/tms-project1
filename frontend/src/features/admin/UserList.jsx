@@ -1,6 +1,9 @@
 
 import { useEffect, useState } from 'react';
 import { listUsersRequest } from '../../api/usersApi';
+import Modal from '../../components/Modal';
+import Button from '../../components/Button';
+import UserForm from './UserForm';
 
 export default function UserList() {
     const [users, setUsers] = useState([]);
@@ -8,6 +11,7 @@ export default function UserList() {
     const [role, setRole] = useState('');
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
+    const [showCreate, setShowCreate] = useState(false);
 
     useEffect(() => {
         const timeout = setTimeout(() => {
@@ -36,6 +40,7 @@ export default function UserList() {
                     <option value="Collaborator">Collaborator</option>
                 </select>
             </div>
+            <Button onClick={() => setShowCreate(true)}>Add User</Button>
             <table className="w-full text-left text-sm">
                 <thead><tr className="border-b text-slate-500"><th className="py-2">Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead>
                 <tbody>
@@ -52,6 +57,9 @@ export default function UserList() {
                 <span>Page {page} of {Math.ceil(total / 10) || 1}</span>
                 <button disabled={page * 10 >= total} onClick={() => setPage((p) => p + 1)} className="disabled:opacity-40">Next</button>
             </div>
+            <Modal open={showCreate} onClose={() => setShowCreate(false)} title="Add User">
+                <UserForm onSuccess={() => { setShowCreate(false); setPage(1); }} />
+            </Modal>
         </div>
     );
 }
