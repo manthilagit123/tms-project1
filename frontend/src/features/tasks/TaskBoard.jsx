@@ -4,6 +4,7 @@ import TaskCard from './TaskCard';
 import TaskFilters from './TaskFilters';
 import TaskForm from './TaskForm';
 import { useAuth } from '../../context/AuthContext';
+import { useSocket } from '../../context/SocketContext';
 
 const COLUMNS = ['To Do', 'In Progress', 'Completed'];
 
@@ -20,6 +21,18 @@ export default function TaskBoard() {
   }
 
   useEffect(() => { refresh(); }, [filters]);
+
+  const socket = useSocket();
+  useEffect(() => {
+    if (!socket) return;
+    const handler = (notification) => {
+      if (['task_assigned', 'status_changed', 'comment_added'].includes(notification.type)) {
+        refresh(); // simplest correct approach: just refetch on any task-relevant event
+      }
+    };
+    socket.on('notification:new', handler);
+    return () => socket.off('notification:new', handler);
+  }, [socket]);
 
   async function handleStatusChange(taskId, newStatus) {
     await updateTaskStatusRequest(taskId, newStatus);
