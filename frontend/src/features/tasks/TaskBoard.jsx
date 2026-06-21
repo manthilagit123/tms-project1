@@ -12,6 +12,7 @@ export default function TaskBoard() {
   const [tasks, setTasks] = useState([]);
   const [filters, setFilters] = useState({ status: '', priority: '', search: '' });
   const [showForm, setShowForm] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(null);
 
   async function refresh() {
     const res = await listTasksRequest(filters);
@@ -54,6 +55,16 @@ export default function TaskBoard() {
         ))}
       </div>
       {showForm && <TaskForm onClose={() => setShowForm(false)} onCreated={refresh} />}
+      {confirmDelete && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="rounded-lg bg-white p-6 shadow-lg">
+            <p className="mb-4 text-sm">Delete "{confirmDelete.title}"? This also removes its comments and attachments.</p>
+            <button onClick={async () => { await deleteTaskRequest(confirmDelete.id); setConfirmDelete(null); refresh(); }} className="mr-2 rounded bg-red-600 px-4 py-2 text-white">Delete</button>
+            <button onClick={() => setConfirmDelete(null)} className="rounded bg-slate-100 px-4 py-2">Cancel</button>
+          </div>
+        </div>
+      )}
     </div>
+
   );
 }
