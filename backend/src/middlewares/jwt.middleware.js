@@ -1,9 +1,12 @@
-// ⚠️ TEMPORARY STUB — DO NOT MERGE TO MAIN.
-// Replace with Person 1's real implementation when feature/auth-rbac merges to develop.
+const { verifyToken } = require('../utils/token.util');
+
 module.exports = function authenticate(req, res, next) {
-    const role = req.headers['x-stub-role'];
-    const id = req.headers['x-stub-user-id'];
-    if (!role || !id) return res.status(401).json({ code: 401, message: 'No token provided (stub: missing x-stub headers)' });
-    req.user = { id, role };
-    next();
+    const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ code: 401, message: 'No token provided' });
+    try {
+        req.user = verifyToken(token);
+        next();
+    } catch {
+        return res.status(401).json({ code: 401, message: 'Invalid or expired token' });
+    }
 };

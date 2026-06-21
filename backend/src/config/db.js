@@ -1,10 +1,5 @@
-// Supabase client — will be replaced by real implementation
-// Stub file so imports resolve during testing
 const { createClient } = require('@supabase/supabase-js');
+const env = require('./env');
 
-const supabase = createClient(
-    process.env.SUPABASE_URL || 'http://localhost',
-    process.env.SUPABASE_SERVICE_KEY || 'stub-key'
-);
-
+const supabase = createClient(env.SUPABASE_URL, env.SUPABASE_SERVICE_ROLE_KEY);
 module.exports = supabase;
