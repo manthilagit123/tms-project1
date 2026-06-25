@@ -16,6 +16,9 @@ vi.mock('../../../api/notificationsApi', () => ({
 describe('NotificationBell', () => {
   it('increments unread count on live notification:new event', async () => {
     render(<NotificationBell onClick={vi.fn()} />);
+    await act(async () => {
+      await Promise.resolve();
+    });
     act(() => { socketHandlers['notification:new']({ type: 'status_changed' }); });
     expect(await screen.findByText('1')).toBeInTheDocument();
   });

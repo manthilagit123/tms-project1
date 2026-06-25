@@ -44,7 +44,7 @@ export default function TaskBoard() {
     refresh();
   }
 
-  const canCreate = user.role === 'Admin' || user.role === 'Project Manager';
+  const canCreate = user?.role === 'Admin' || user?.role === 'Project Manager';
 
   return (
     <div className="p-8">

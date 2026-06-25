@@ -1,6 +1,6 @@
 import { http, HttpResponse } from 'msw';
 
-const API = import.meta.env.VITE_API_BASE_URL;
+const API = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3000/api';
 let mockTasks = [
   { id: 't1', title: 'Setup CI pipeline', description: 'Configure GitHub Actions', due_date: '2026-12-01', priority: 'High', status: 'To Do', assignees: ['33333333-3333-3333-3333-333333333333'] },
   { id: 't2', title: 'Write API docs', description: '', due_date: '2026-11-15', priority: 'Medium', status: 'In Progress', assignees: ['33333333-3333-3333-3333-333333333333'] },

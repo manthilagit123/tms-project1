@@ -1,4 +1,7 @@
 jest.mock('../../src/config/db');
+jest.mock('../../src/utils/mailer', () => ({
+  sendWelcomeEmail: jest.fn().mockResolvedValue(undefined),
+}));
 const supabase = require('../../src/config/db');
 const { createUser, listUsers } = require('../../src/modules/users/users.service');
 const { updateUser } = require('../../src/modules/users/users.service');
