@@ -1,10 +1,11 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const schema = z.object({
     email: z.string().email('Enter a valid email'),
@@ -34,27 +35,44 @@ export default function LoginPage() {
     }
 
     return (
-        <div className="flex min-h-screen items-center justify-center bg-slate-50">
-            <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm rounded-lg bg-white p-8 shadow">
-                <h1 className="mb-6 text-2xl font-semibold text-slate-900">Sign in</h1>
+        <div className="flex-center gradient-bg" style={{ minHeight: '100vh', padding: '20px' }}>
+            <form onSubmit={handleSubmit(onSubmit)} className="glass-panel animate-fade-in" style={{ width: '100%', maxWidth: '24rem', padding: '40px 32px' }}>
+                <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+                    <h1 className="text-2xl font-bold gradient-text" style={{ marginBottom: '8px' }}>Welcome Back</h1>
+                    <p className="text-sm text-secondary">Sign in to your TMS account</p>
+                </div>
+                
                 {serverError && (
-                    <p className="mb-4 rounded bg-red-50 p-2 text-sm text-red-600">{serverError}</p>
+                    <div className="glass-card text-danger text-sm" style={{ padding: '12px', marginBottom: '24px', textAlign: 'center', border: '1px solid rgba(239, 68, 68, 0.3)' }}>
+                        {serverError}
+                    </div>
                 )}
-                <label htmlFor="email" className="mb-1 block text-sm font-medium text-slate-700">Email</label>
-                <input id="email" {...register('email')} className="mb-1 w-full rounded border border-slate-300 px-3 py-2" />
-                {errors.email && <p className="mb-3 text-sm text-red-600">{errors.email.message}</p>}
+                
+                <Input
+                    label="Email Address"
+                    id="email"
+                    type="email"
+                    placeholder="you@example.com"
+                    {...register('email')}
+                    error={errors.email?.message}
+                />
 
-                <label htmlFor="password" className="mb-1 block text-sm font-medium text-slate-700">Password</label>
-                <input id="password" type="password" {...register('password')} className="mb-1 w-full rounded border border-slate-300 px-3 py-2" />
-                {errors.password && <p className="mb-3 text-sm text-red-600">{errors.password.message}</p>}
+                <Input
+                    label="Password"
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    {...register('password')}
+                    error={errors.password?.message}
+                />
 
-                <button
+                <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="mt-4 w-full rounded bg-indigo-600 py-2 font-medium text-white hover:bg-indigo-700 disabled:opacity-50"
+                    style={{ width: '100%', marginTop: '16px' }}
                 >
-                    {isSubmitting ? 'Signing in…' : 'Sign in'}
-                </button>
+                    {isSubmitting ? 'Signing in…' : 'Sign In'}
+                </Button>
             </form>
         </div>
     );

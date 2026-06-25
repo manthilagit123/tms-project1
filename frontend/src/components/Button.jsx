@@ -1,12 +1,11 @@
-
-export default function Button({ variant = 'primary', children, ...props }) {
+export default function Button({ variant = 'primary', className = '', children, ...props }) {
     const styles = {
-        primary: 'bg-indigo-600 text-white hover:bg-indigo-700',
-        danger: 'bg-red-600 text-white hover:bg-red-700',
-        secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+        primary: 'btn-primary',
+        danger: 'btn-danger',
+        secondary: 'btn-secondary',
     };
     return (
-        <button {...props} className={`rounded px-4 py-2 font-medium disabled:opacity-50 ${styles[variant]}`}>
+        <button {...props} className={`${styles[variant] || styles.primary} ${className} ${props.disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
             {children}
         </button>
     );
