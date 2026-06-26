@@ -8,10 +8,10 @@ async function loginHandler(req, res, next) {
     const token = signToken(user);
     res.cookie('tms_token', token, {
       httpOnly: true,
-      secure: true,        // Always secure (both envs are HTTPS in prod)
-      sameSite: 'none',   // Required for cross-origin cookie (SWA → App Service)
+      secure: true,
+      sameSite: 'none',
     });
-    res.json({ id: user.id, name: user.name, role: user.role, mustResetPassword: user.must_reset_password });
+    res.json({ id: user.id, name: user.name, role: user.role, mustResetPassword: user.must_reset_password, token });
   } catch (err) { next(err); }
 }
 
