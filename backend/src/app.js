@@ -22,7 +22,7 @@ app.use(cors({
   origin: (origin, callback) => {
     // Allow requests with no origin (e.g. curl, Postman, mobile apps)
     if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) return callback(null, true);
     callback(new Error(`CORS: origin ${origin} not allowed`));
   },
   credentials: true,
