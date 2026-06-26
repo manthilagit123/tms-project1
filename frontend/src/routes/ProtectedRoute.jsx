@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Navbar from '../components/Navbar';
+import Sidebar from '../components/Sidebar';
 
 export default function ProtectedRoute({ roles, children }) {
     const { user, loading } = useAuth();
@@ -8,9 +8,9 @@ export default function ProtectedRoute({ roles, children }) {
     if (!user) return <Navigate to="/login" replace />;
     if (roles && !roles.includes(user.role)) return <Navigate to="/403" replace />;
     return (
-        <div className="min-h-screen flex flex-col">
-            <Navbar />
-            <main className="flex-1">
+        <div className="min-h-screen flex bg-slate-950">
+            <Sidebar />
+            <main className="flex-1 overflow-x-hidden overflow-y-auto max-h-screen">
                 {children}
             </main>
         </div>
