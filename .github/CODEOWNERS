@@ -1,0 +1,67 @@
+# CODEOWNERS
+# Each line assigns ownership of a path to one or more GitHub users.
+# The rightmost matching rule takes precedence.
+# Owners are automatically requested for review on every PR touching their paths.
+#
+# Replace @handle-1 ... @handle-5 with the actual GitHub usernames of
+# Person 1 – Person 5 from the team.
+
+# ──────────────────────────────────────────────
+# Global fallback — ALL changes require at least
+# the project lead (Person 5 / DevOps owner) as reviewer.
+# ──────────────────────────────────────────────
+*                                   @handle-5
+
+# ──────────────────────────────────────────────
+# Backend — Auth, JWT, RBAC, User Management
+# Person 1
+# ──────────────────────────────────────────────
+backend/src/modules/auth/            @handle-1
+backend/src/modules/users/           @handle-1
+backend/src/middlewares/jwt.middleware.js    @handle-1
+backend/src/middlewares/rbac.middleware.js   @handle-1
+
+# ──────────────────────────────────────────────
+# Backend — Tasks, Comments, Attachments
+# Person 2
+# ──────────────────────────────────────────────
+backend/src/modules/tasks/           @handle-2
+backend/src/modules/comments/        @handle-2
+backend/src/modules/attachments/     @handle-2
+
+# ──────────────────────────────────────────────
+# Backend — Real-Time, Notifications, Security (lead)
+# Person 3 reviews ALL security-related files
+# ──────────────────────────────────────────────
+backend/src/modules/notifications/   @handle-3
+backend/src/sockets/                 @handle-3
+backend/src/middlewares/             @handle-3
+backend/src/app.js                   @handle-3
+
+# ──────────────────────────────────────────────
+# Frontend — Auth UI, Admin / User Management UI
+# Person 4
+# ──────────────────────────────────────────────
+frontend/src/features/auth/          @handle-4
+frontend/src/features/admin/         @handle-4
+frontend/src/context/AuthContext.jsx  @handle-4
+frontend/src/routes/                  @handle-4
+
+# ──────────────────────────────────────────────
+# Frontend — Task Board, Notifications, DevOps
+# Person 5
+# ──────────────────────────────────────────────
+frontend/src/features/tasks/         @handle-5
+frontend/src/features/notifications/ @handle-5
+frontend/src/socket/                 @handle-5
+.github/                             @handle-5
+docker-compose.yml                   @handle-5
+frontend/Dockerfile                  @handle-5
+backend/Dockerfile                   @handle-5
+
+# ──────────────────────────────────────────────
+# Documentation — any contributor + Person 5
+# ──────────────────────────────────────────────
+*.md                                 @handle-5
+Task_Management_SRS.md               @handle-5
+CONTRIBUTING.md                      @handle-5
