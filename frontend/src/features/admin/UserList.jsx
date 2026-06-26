@@ -11,6 +11,7 @@ export default function UserList() {
     const [page, setPage] = useState(1);
     const [total, setTotal] = useState(0);
     const [showCreate, setShowCreate] = useState(false);
+    const [editingUser, setEditingUser] = useState(null);
     const [confirmTarget, setConfirmTarget] = useState(null);
     const [newlyCreatedUser, setNewlyCreatedUser] = useState(null);
     const [triggerRefetch, setTriggerRefetch] = useState(0);
@@ -88,14 +89,22 @@ export default function UserList() {
                                         </span>
                                     </td>
                                     <td style={{ padding: '16px' }}>
-                                        {u.is_active && (
+                                        <div style={{ display: 'flex', gap: '16px' }}>
                                             <button 
-                                                onClick={() => setConfirmTarget(u)}
-                                                style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
+                                                onClick={() => setEditingUser(u)}
+                                                style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
                                             >
-                                                Deactivate
+                                                Edit
                                             </button>
-                                        )}
+                                            {u.is_active && (
+                                                <button 
+                                                    onClick={() => setConfirmTarget(u)}
+                                                    style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
+                                                >
+                                                    Deactivate
+                                                </button>
+                                            )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))}
@@ -115,15 +124,21 @@ export default function UserList() {
                 </div>
             </div>
             
-            <Modal open={showCreate} onClose={() => setShowCreate(false)} title="Add User">
-                <UserForm onSuccess={(user) => { 
-                    setShowCreate(false); 
-                    setTriggerRefetch(t => t + 1); 
-                    setPage(1); 
-                    if (user && user.tempPassword) {
-                        setNewlyCreatedUser(user);
-                    }
-                }} />
+            <Modal open={showCreate || !!editingUser} onClose={() => { setShowCreate(false); setEditingUser(null); }} title={editingUser ? "Edit User" : "Add User"}>
+                <UserForm 
+                    existingUser={editingUser}
+                    onSuccess={(user) => { 
+                        setShowCreate(false); 
+                        setEditingUser(null);
+                        setTriggerRefetch(t => t + 1); 
+                        if (!editingUser) {
+                            setPage(1); 
+                        }
+                        if (user && user.tempPassword) {
+                            setNewlyCreatedUser(user);
+                        }
+                    }} 
+                />
             </Modal>
             
             <Modal open={!!newlyCreatedUser} onClose={() => setNewlyCreatedUser(null)} title="User Created Successfully!">
