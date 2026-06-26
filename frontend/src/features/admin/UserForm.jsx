@@ -33,27 +33,29 @@ export default function UserForm({ existingUser, onSuccess }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-            {errors.root && <p className="rounded bg-red-50 p-2 text-sm text-red-600">{errors.root.message}</p>}
+        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {errors.root && <p className="text-danger" style={{ padding: '8px', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '4px' }}>{errors.root.message}</p>}
 
             <div>
-                <input {...register('name')} placeholder="Full name" className="w-full rounded border border-slate-300 px-3 py-2" />
-                {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
+                <input {...register('name')} placeholder="Full name" className="input-modern" style={{ width: '100%' }} />
+                {errors.name && <p className="text-danger" style={{ fontSize: '0.875rem', marginTop: '4px' }}>{errors.name.message}</p>}
             </div>
             <div>
-                <input {...register('email')} placeholder="Email" className="w-full rounded border border-slate-300 px-3 py-2" />
-                {errors.email && <p className="text-sm text-red-600">{errors.email.message}</p>}
+                <input {...register('email')} placeholder="Email" className="input-modern" style={{ width: '100%' }} />
+                {errors.email && <p className="text-danger" style={{ fontSize: '0.875rem', marginTop: '4px' }}>{errors.email.message}</p>}
             </div>
             <div>
-                <select {...register('role')} className="w-full rounded border border-slate-300 px-3 py-2">
+                <select {...register('role')} className="input-modern" style={{ width: '100%' }}>
                     <option value="Admin">Admin</option>
                     <option value="Project Manager">Project Manager</option>
                     <option value="Collaborator">Collaborator</option>
                 </select>
             </div>
-            <button type="submit" disabled={isSubmitting} className="rounded bg-indigo-600 px-4 py-2 font-medium text-white disabled:opacity-50">
-                {existingUser ? 'Save changes' : 'Create user'}
-            </button>
+            <div style={{ marginTop: '8px' }}>
+                <button type="submit" disabled={isSubmitting} className="btn-primary" style={{ width: 'auto' }}>
+                    {existingUser ? 'Save changes' : 'Create user'}
+                </button>
+            </div>
         </form>
     );
 }
