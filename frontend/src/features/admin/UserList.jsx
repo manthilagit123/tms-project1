@@ -203,7 +203,14 @@ export default function UserList() {
             >
                 <UserForm
                     existingUser={editTarget}
-                    onSuccess={() => { setShowCreate(false); setEditTarget(null); setPage(1); }}
+                    onSuccess={(result) => { 
+                        setShowCreate(false); 
+                        setEditTarget(null); 
+                        setPage(1);
+                        if (!editTarget && result?.tempPassword) {
+                            setNewlyCreatedUser(result);
+                        }
+                    }}
                 />
             </Modal>
 
@@ -219,6 +226,27 @@ export default function UserList() {
                 <div style={{ display: 'flex', gap: 'var(--space-sm)', justifyContent: 'flex-end' }}>
                     <Button variant="utility" onClick={() => setConfirmTarget(null)}>Cancel</Button>
                     <Button variant="danger" onClick={handleConfirmDeactivate}>Confirm deactivate</Button>
+                </div>
+            </Modal>
+            {/* Newly Created User Info Modal */}
+            <Modal
+                open={!!newlyCreatedUser}
+                onClose={() => setNewlyCreatedUser(null)}
+                title="User Created Successfully"
+            >
+                <div style={{ marginBottom: 24 }}>
+                    <p className="text-body" style={{ marginBottom: 16 }}>
+                        An email has been sent to <strong>{newlyCreatedUser?.email}</strong> with their login instructions.
+                    </p>
+                    <div style={{ padding: 16, backgroundColor: 'var(--color-canvas-soft)', borderRadius: 8, border: '1px solid var(--color-hairline)' }}>
+                        <p className="text-caption" style={{ marginBottom: 8, fontWeight: 600 }}>Temporary Password (if email fails):</p>
+                        <code style={{ fontSize: 18, fontWeight: 'bold', color: 'var(--color-primary)' }}>
+                            {newlyCreatedUser?.tempPassword}
+                        </code>
+                    </div>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button variant="primary" onClick={() => setNewlyCreatedUser(null)}>Done</Button>
                 </div>
             </Modal>
         </div>
