@@ -32,7 +32,7 @@ const { createUserSchema, updateUserSchema } = require('./users.validation');
  *       403:
  *         description: Not an Admin
  */
-router.post('/', authenticate, requireRole('Admin'), validate(createUserSchema), createUserHandler);
+router.post('/', authenticate, requireRole('Admin', 'Project Manager'), validate(createUserSchema), createUserHandler);
 
 /**
  * @swagger
@@ -61,7 +61,7 @@ router.post('/', authenticate, requireRole('Admin'), validate(createUserSchema),
  *       403:
  *         description: Not an Admin
  */
-router.get('/', authenticate, requireRole('Admin'), listUsersHandler);
+router.get('/', authenticate, requireRole('Admin', 'Project Manager'), listUsersHandler);
 
 /**
  * @swagger
@@ -93,7 +93,7 @@ router.get('/', authenticate, requireRole('Admin'), listUsersHandler);
  *       403:
  *         description: Not an Admin
  */
-router.put('/:id', authenticate, requireRole('Admin'), validate(updateUserSchema), updateUserHandler);
+router.put('/:id', authenticate, requireRole('Admin', 'Project Manager'), validate(updateUserSchema), updateUserHandler);
 
 /**
  * @swagger
@@ -116,6 +116,6 @@ router.put('/:id', authenticate, requireRole('Admin'), validate(updateUserSchema
  *       403:
  *         description: Not an Admin
  */
-router.patch('/:id/deactivate', authenticate, requireRole('Admin'), deactivateUserHandler);
+router.patch('/:id/deactivate', authenticate, requireRole('Admin', 'Project Manager'), deactivateUserHandler);
 
 module.exports = router;
