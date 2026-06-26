@@ -69,6 +69,7 @@ export default function UserList() {
                                 <th style={{ padding: '12px 16px', fontWeight: '500' }}>Email</th>
                                 <th style={{ padding: '12px 16px', fontWeight: '500' }}>Role</th>
                                 <th style={{ padding: '12px 16px', fontWeight: '500' }}>Status</th>
+                                <th style={{ padding: '12px 16px', fontWeight: '500' }}></th>
                                 <th style={{ padding: '12px 16px', fontWeight: '500' }}>Actions</th>
                             </tr>
                         </thead>
@@ -89,28 +90,28 @@ export default function UserList() {
                                         </span>
                                     </td>
                                     <td style={{ padding: '16px' }}>
-                                        <div style={{ display: 'flex', gap: '16px' }}>
+                                        <button 
+                                            onClick={() => setEditingUser(u)}
+                                            style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
+                                        >
+                                            Edit
+                                        </button>
+                                    </td>
+                                    <td style={{ padding: '16px' }}>
+                                        {u.is_active && (
                                             <button 
-                                                onClick={() => setEditingUser(u)}
-                                                style={{ background: 'none', border: 'none', color: 'var(--accent-primary)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
+                                                onClick={() => setConfirmTarget(u)}
+                                                style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
                                             >
-                                                Edit
+                                                Deactivate
                                             </button>
-                                            {u.is_active && (
-                                                <button 
-                                                    onClick={() => setConfirmTarget(u)}
-                                                    style={{ background: 'none', border: 'none', color: 'var(--danger)', cursor: 'pointer', fontSize: '0.875rem', fontWeight: '500' }}
-                                                >
-                                                    Deactivate
-                                                </button>
-                                            )}
-                                        </div>
+                                        )}
                                     </td>
                                 </tr>
                             ))}
                             {users.length === 0 && (
                                 <tr>
-                                    <td colSpan="5" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-secondary)' }}>No users found</td>
+                                    <td colSpan="6" style={{ padding: '32px', textAlign: 'center', color: 'var(--text-secondary)' }}>No users found</td>
                                 </tr>
                             )}
                         </tbody>
