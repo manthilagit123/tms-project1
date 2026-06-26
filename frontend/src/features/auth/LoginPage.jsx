@@ -4,6 +4,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import Input from '../../components/Input';
+import Button from '../../components/Button';
 
 const schema = z.object({
     email: z.string().email('Enter a valid email'),
@@ -20,10 +22,8 @@ export default function LoginPage() {
         setServerError('');
         try {
             const user = await login(values.email, values.password);
-            if (user.mustResetPassword) {
+            if (user.reset_required) {
                 navigate('/reset-password');
-            } else if (user.role === 'Admin') {
-                navigate('/users');
             } else {
                 navigate('/dashboard');
             }

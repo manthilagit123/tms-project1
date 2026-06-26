@@ -97,3 +97,4 @@ export default function TaskCard({ task, onStatusChange, onDelete }) {
         </div>
     );
 }
+

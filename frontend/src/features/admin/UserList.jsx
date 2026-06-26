@@ -13,6 +13,8 @@ export default function UserList() {
     const [showCreate, setShowCreate] = useState(false);
     const [editTarget, setEditTarget] = useState(null);
     const [confirmTarget, setConfirmTarget] = useState(null);
+    const [newlyCreatedUser, setNewlyCreatedUser] = useState(null);
+    const [triggerRefetch, setTriggerRefetch] = useState(0);
 
     const LIMIT = 10;
 
@@ -24,7 +26,7 @@ export default function UserList() {
             });
         }, 300);
         return () => clearTimeout(timeout);
-    }, [search, role, page]);
+    }, [search, role, page, triggerRefetch]);
 
     async function handleConfirmDeactivate() {
         await deactivateUserRequest(confirmTarget.id);

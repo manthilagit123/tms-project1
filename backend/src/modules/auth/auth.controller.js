@@ -8,8 +8,8 @@ async function loginHandler(req, res, next) {
     const token = signToken(user);
     res.cookie('tms_token', token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      secure: true,        // Always secure (both envs are HTTPS in prod)
+      sameSite: 'none',   // Required for cross-origin cookie (SWA → App Service)
     });
     res.json({ id: user.id, name: user.name, role: user.role, mustResetPassword: user.must_reset_password });
   } catch (err) { next(err); }
@@ -23,4 +23,13 @@ async function resetPasswordHandler(req, res, next) {
   } catch (err) { next(err); }
 }
 
-module.exports = { loginHandler, resetPasswordHandler };
+async function getSocketTokenHandler(req, res, next) {
+  try {
+    // We already have req.user from the authenticate middleware
+    // We generate a short-lived token or simply sign their current session details for the socket
+    const token = signToken({ id: req.user.id, name: req.user.name, role: req.user.role });
+    res.json({ token });
+  } catch (err) { next(err); }
+}
+
+module.exports = { loginHandler, resetPasswordHandler, getSocketTokenHandler };

@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { loginHandler, resetPasswordHandler } = require('./auth.controller');
+const { loginHandler, resetPasswordHandler, getSocketTokenHandler } = require('./auth.controller');
 const authenticate = require('../../middlewares/jwt.middleware');
 const validate = require('../../middlewares/validate.middleware');
 const { loginSchema, resetPasswordSchema } = require('./auth.validation');
@@ -55,5 +55,21 @@ router.post('/login', validate(loginSchema), loginHandler);
  *         description: New password too short
  */
 router.put('/reset-password', authenticate, validate(resetPasswordSchema), resetPasswordHandler);
+
+/**
+ * @swagger
+ * /api/auth/socket-token:
+ *   get:
+ *     summary: Get a token for authenticating WebSockets
+ *     tags: [Auth]
+ *     security:
+ *       - cookieAuth: []
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved token
+ *       401:
+ *         description: Unauthorized
+ */
+router.get('/socket-token', authenticate, getSocketTokenHandler);
 
 module.exports = router;

@@ -2,6 +2,7 @@ const { createServer } = require('http');
 const { io: ioClient } = require('socket.io-client');
 const initSocketServer = require('../../src/sockets/socket.server');
 const registerSocketAuth = require('../../src/sockets/socket.auth');
+const { signToken } = require('../../src/utils/token.util');
 
 let io, httpServer, port;
 
@@ -32,8 +33,9 @@ test('rejects malformed token', (done) => {
   });
 });
 
-test('accepts valid stub token', (done) => {
-  const client = ioClient(`http://localhost:${port}`, { auth: { token: 'Admin:u1' } });
+test('accepts valid JWT token', (done) => {
+  const token = signToken({ id: 'u1', role: 'Admin' });
+  const client = ioClient(`http://localhost:${port}`, { auth: { token } });
   client.on('connect', () => {
     expect(client.connected).toBe(true);
     client.close();

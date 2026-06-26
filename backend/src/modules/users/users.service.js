@@ -18,9 +18,15 @@ async function createUser({ name, email, role }) {
     .single();
   if (error) throw new ApiError(400, error.message);
 
-  await sendWelcomeEmail(email, tempPassword);
+  // Send welcome email — non-fatal if SMTP not configured
+  try {
+    await sendWelcomeEmail(email, tempPassword);
+  } catch (mailErr) {
+    console.warn('Welcome email could not be sent:', mailErr.message);
+  }
 
-  return user;
+  // Return tempPassword so the admin can share it manually if email is unavailable
+  return { ...user, tempPassword };
 }
 
 async function listUsers({ search, role, page = 1, limit = 20 }) {

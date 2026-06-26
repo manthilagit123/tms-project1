@@ -2,6 +2,7 @@ const { createServer } = require('http');
 const { io: ioClient } = require('socket.io-client');
 const initSocketServer = require('../../src/sockets/socket.server');
 const registerSocketAuth = require('../../src/sockets/socket.auth');
+const { signToken } = require('../../src/utils/token.util');
 
 let io, httpServer, port;
 
@@ -18,8 +19,10 @@ beforeAll((done) => {
 afterAll(() => { io.close(); httpServer.close(); });
 
 test('events sent to one room do not leak to another user', (done) => {
-  const clientA = ioClient(`http://localhost:${port}`, { auth: { token: 'Admin:u1' } });
-  const clientB = ioClient(`http://localhost:${port}`, { auth: { token: 'Collaborator:u2' } });
+  const tokenA = signToken({ id: 'u1', role: 'Admin' });
+  const tokenB = signToken({ id: 'u2', role: 'Collaborator' });
+  const clientA = ioClient(`http://localhost:${port}`, { auth: { token: tokenA } });
+  const clientB = ioClient(`http://localhost:${port}`, { auth: { token: tokenB } });
   let bReceived = false;
 
   clientB.on('test', () => { bReceived = true; });
