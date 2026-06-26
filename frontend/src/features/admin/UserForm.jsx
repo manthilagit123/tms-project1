@@ -33,7 +33,7 @@ export default function UserForm({ existingUser, onSuccess }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        <form onSubmit={handleSubmit(onSubmit)} style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {errors.root && <p className="text-danger" style={{ padding: '8px', background: 'rgba(239, 68, 68, 0.1)', borderRadius: '4px' }}>{errors.root.message}</p>}
 
             <div>

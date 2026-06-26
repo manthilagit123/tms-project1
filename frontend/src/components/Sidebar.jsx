@@ -18,7 +18,7 @@ export default function Sidebar() {
     }
 
     return (
-        <aside className="w-64 min-h-screen glass-panel border-r border-slate-800/80 bg-slate-900/35 flex flex-col justify-between sticky top-0 z-40 backdrop-blur-lg">
+        <aside className="w-64 min-h-screen border-r border-slate-900 bg-slate-950 flex flex-col justify-between sticky top-0 z-40">
             <div className="p-6 md:p-8">
                 <div className="text-2xl font-black bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent tracking-tight mb-8">
                     TMS Project
@@ -32,8 +32,8 @@ export default function Sidebar() {
                                 to={link.path}
                                 className={`px-4 py-3 rounded-xl text-sm font-bold flex items-center gap-3 transition-all ${
                                     isActive 
-                                        ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 shadow-lg shadow-indigo-500/10' 
-                                        : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 border border-transparent'
+                                        ? 'bg-white text-slate-950 shadow-lg shadow-white/10' 
+                                        : 'text-slate-400 hover:text-white hover:bg-slate-800/50 border border-transparent'
                                 }`}
                             >
                                 <span className="text-lg">{link.icon}</span>

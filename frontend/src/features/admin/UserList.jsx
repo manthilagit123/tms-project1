@@ -40,7 +40,7 @@ export default function UserList() {
             </div>
             
             <div className="glass-panel" style={{ padding: '24px', marginBottom: '24px' }}>
-                <div style={{ display: 'flex', gap: '16px', marginBottom: '24px', flexWrap: 'wrap' }}>
+                <div style={{ display: 'flex', gap: '32px', marginBottom: '24px', flexWrap: 'wrap' }}>
                     <input
                         placeholder="Search name or email"
                         value={search}
