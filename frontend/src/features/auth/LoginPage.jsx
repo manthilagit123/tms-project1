@@ -22,10 +22,8 @@ export default function LoginPage() {
         setServerError('');
         try {
             const user = await login(values.email, values.password);
-            if (user.mustResetPassword) {
+            if (user.reset_required) {
                 navigate('/reset-password');
-            } else if (user.role === 'Admin') {
-                navigate('/users');
             } else {
                 navigate('/dashboard');
             }
