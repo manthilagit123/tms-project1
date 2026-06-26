@@ -1,12 +1,24 @@
-
-export default function Button({ variant = 'primary', children, ...props }) {
-    const styles = {
-        primary: 'bg-indigo-600 text-white hover:bg-indigo-700',
-        danger: 'bg-red-600 text-white hover:bg-red-700',
-        secondary: 'bg-slate-100 text-slate-700 hover:bg-slate-200',
+/**
+ * Button — design.md component spec
+ *
+ * variant="primary"   → Notion Blue pill  (.btn-primary)
+ * variant="secondary" → White pill with soft shadow  (.btn-secondary)
+ * variant="utility"   → White, 8px radius, hairline border  (.btn-utility)
+ * variant="danger"    → Red, 8px radius, destructive actions  (.btn-danger)
+ */
+export default function Button({ variant = 'primary', className = '', children, ...props }) {
+    const cls = {
+        primary:   'btn-primary',
+        secondary: 'btn-secondary',
+        utility:   'btn-utility',
+        danger:    'btn-danger',
     };
+
     return (
-        <button {...props} className={`rounded px-4 py-2 font-medium disabled:opacity-50 ${styles[variant]}`}>
+        <button
+            {...props}
+            className={`${cls[variant] ?? 'btn-utility'} ${className}`}
+        >
             {children}
         </button>
     );

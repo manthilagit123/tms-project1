@@ -1,10 +1,22 @@
-
-export default function Input({ label, error, ...props }) {
+/**
+ * Input — design.md text-input spec
+ * White surface, #ddd border, 4px radius, Inter 15px/400.
+ * Focus: primary blue ring + box-shadow.
+ */
+export default function Input({ label, error, id, className = '', ...props }) {
     return (
-        <div className="mb-3">
-            {label && <label className="mb-1 block text-sm font-medium text-slate-700">{label}</label>}
-            <input {...props} className="w-full rounded border border-slate-300 px-3 py-2" />
-            {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+        <div style={{ marginBottom: 12 }}>
+            {label && (
+                <label htmlFor={id} className="field-label">
+                    {label}
+                </label>
+            )}
+            <input
+                id={id}
+                {...props}
+                className={`input-field${error ? ' input-error' : ''} ${className}`}
+            />
+            {error && <p className="field-error">{error}</p>}
         </div>
     );
 }

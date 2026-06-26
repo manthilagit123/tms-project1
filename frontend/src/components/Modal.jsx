@@ -1,11 +1,43 @@
+/**
+ * Modal — design.md ex-modal-card spec
+ * card-elevated surface (rounded-xl + elevated shadow).
+ * X close button top-right; title in card-title weight.
+ */
 export default function Modal({ open, onClose, title, children }) {
     if (!open) return null;
+
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-            <div className="w-full max-w-md rounded-lg bg-white p-6 shadow-lg">
-                <h2 className="mb-4 text-lg font-semibold text-slate-900">{title}</h2>
+        <div className="modal-backdrop" onClick={onClose}>
+            <div
+                className="card-elevated"
+                style={{ width: '100%', maxWidth: 480, position: 'relative' }}
+                onClick={(e) => e.stopPropagation()}
+            >
+                {/* Header */}
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        marginBottom: 20,
+                    }}
+                >
+                    <h2 className="text-card-title">{title}</h2>
+                    <button
+                        onClick={onClose}
+                        className="btn-icon"
+                        id="modal-close-btn"
+                        aria-label="Close"
+                        style={{ flexShrink: 0 }}
+                    >
+                        {/* ✕ icon */}
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M13 1 1 13M1 1l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                        </svg>
+                    </button>
+                </div>
+
                 {children}
-                <button onClick={onClose} className="mt-4 text-sm text-slate-500 hover:text-slate-700">Close</button>
             </div>
         </div>
     );
