@@ -12,15 +12,16 @@
   --color-secondary:      #213183;
 
   /* Canvas / Surfaces */
-  --color-canvas:         #ffffff;
-  --color-canvas-soft:    #f6f5f4;
-  --color-hairline:       #e6e6e6;
+  --color-canvas:         #020617; /* slate-950 */
+  --color-canvas-soft:    #0f172a; /* slate-900 */
+  --color-surface:        #1e293b; /* slate-800 */
+  --color-hairline:       #334155; /* slate-700 */
 
   /* Text */
-  --color-ink:            #000000;
-  --color-ink-secondary:  #31302e;
-  --color-ink-muted:      #615d59;
-  --color-ink-faint:      #a39e98;
+  --color-ink:            #f8fafc; /* slate-50 */
+  --color-ink-secondary:  #cbd5e1; /* slate-300 */
+  --color-ink-muted:      #94a3b8; /* slate-400 */
+  --color-ink-faint:      #64748b; /* slate-500 */
 
   /* Sticker palette — decoration only (priority dots, status badges) */
   --color-accent-sky:     #62aef0;
@@ -128,7 +129,7 @@ a { color: var(--color-primary); }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   color: var(--color-ink);
   font-family: inherit;
   font-size: 16px;
@@ -153,7 +154,7 @@ a { color: var(--color-primary); }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   color: var(--color-ink-secondary);
   font-family: inherit;
   font-size: 15px;
@@ -221,7 +222,7 @@ a { color: var(--color-primary); }
 
 /* Flat card — hairline only (most content cards) */
 .card {
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-hairline);
   border-radius: var(--rounded-lg);
   padding: var(--space-lg);
@@ -229,7 +230,7 @@ a { color: var(--color-primary); }
 
 /* Raised card — soft layered shadow (modals, notifications) */
 .card-elevated {
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   border: 1px solid var(--color-hairline);
   border-radius: var(--rounded-xl);
   padding: var(--space-lg);
@@ -254,14 +255,14 @@ a { color: var(--color-primary); }
 
 .input-field {
   width: 100%;
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   color: var(--color-ink);
   font-family: inherit;
   font-size: 15px;
   font-weight: 400;
   line-height: 1.33;
   padding: 8px 12px;
-  border: 1px solid #dddddd;
+  border: 1px solid var(--color-hairline);
   border-radius: var(--rounded-xs);
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -332,53 +333,53 @@ select.input-field {
   padding: 3px 9px;
   border-radius: var(--rounded-full);
   border: 1px solid var(--color-hairline);
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   color: var(--color-primary);
   white-space: nowrap;
 }
 
 /* Priority badges — sticker palette, decoration only */
 .badge-priority-low {
-  background-color: var(--color-accent-sky-bg);
-  color: #1d6fa8;
+  background-color: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
   border-color: transparent;
 }
 .badge-priority-medium {
-  background-color: var(--color-accent-orange-bg);
-  color: var(--color-accent-orange);
+  background-color: rgba(251, 146, 60, 0.1);
+  color: #fb923c;
   border-color: transparent;
 }
 .badge-priority-high {
-  background-color: var(--color-accent-pink-bg);
-  color: #be185d;
+  background-color: rgba(244, 63, 94, 0.1);
+  color: #f43f5e;
   border-color: transparent;
 }
 
 /* Status badges */
 .badge-status-todo {
-  background-color: var(--color-canvas-soft);
+  background-color: var(--color-surface);
   color: var(--color-ink-muted);
   border-color: transparent;
 }
 .badge-status-inprogress {
-  background-color: var(--color-accent-orange-bg);
-  color: var(--color-accent-orange);
+  background-color: rgba(251, 146, 60, 0.1);
+  color: #fb923c;
   border-color: transparent;
 }
 .badge-status-done {
-  background-color: var(--color-accent-green-bg);
-  color: var(--color-success);
+  background-color: rgba(74, 222, 128, 0.1);
+  color: #4ade80;
   border-color: transparent;
 }
 
 /* User active/deactivated */
 .badge-active {
-  background-color: var(--color-accent-green-bg);
-  color: var(--color-success);
+  background-color: rgba(74, 222, 128, 0.1);
+  color: #4ade80;
   border-color: transparent;
 }
 .badge-inactive {
-  background-color: var(--color-canvas-soft);
+  background-color: var(--color-surface);
   color: var(--color-ink-faint);
   border-color: transparent;
 }
@@ -391,7 +392,7 @@ select.input-field {
   position: sticky;
   top: 0;
   z-index: 40;
-  background-color: var(--color-canvas);
+  background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-hairline);
   height: 56px;
   display: flex;
@@ -484,9 +485,9 @@ select.input-field {
   line-height: 1.43;
   border-left: 3px solid;
 }
-.alert-error   { background-color: var(--color-error-bg);   color: var(--color-error);   border-left-color: var(--color-error); }
-.alert-success { background-color: var(--color-success-bg); color: var(--color-success); border-left-color: var(--color-success); }
-.alert-info    { background-color: #eff6ff;                 color: var(--color-primary); border-left-color: var(--color-primary); }
+.alert-error   { background-color: rgba(220, 38, 38, 0.1);   color: #ef4444;   border-left-color: #ef4444; }
+.alert-success { background-color: rgba(22, 163, 74, 0.1); color: #4ade80; border-left-color: #4ade80; }
+.alert-info    { background-color: rgba(59, 130, 246, 0.1);                 color: #60a5fa; border-left-color: #60a5fa; }
 
 /* ═══════════════════════════════════════════════════════
    DATA TABLE
@@ -505,7 +506,7 @@ select.input-field {
   color: var(--color-ink-muted);
   padding: 10px 14px;
   border-bottom: 1px solid var(--color-hairline);
-  background-color: var(--color-canvas-soft);
+  background-color: var(--color-surface);
 }
 .data-table th:first-child { border-radius: var(--rounded-md) 0 0 0; }
 .data-table th:last-child  { border-radius: 0 var(--rounded-md) 0 0; }

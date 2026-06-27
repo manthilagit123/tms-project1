@@ -7,9 +7,9 @@ import NotificationPanel from '../features/notifications/NotificationPanel';
 import { listProjectsRequest } from '../api/projectsApi';
 
 const ROLE_BADGE = {
-  Admin:             { bg: '#fce7f3', color: '#9d174d' },
-  'Project Manager': { bg: '#eff6ff', color: '#1d6fa8' },
-  Collaborator:      { bg: '#f0fdf4', color: '#15803d' },
+  Admin:             { bg: 'rgba(236, 72, 153, 0.1)', color: '#f472b6' },
+  'Project Manager': { bg: 'rgba(59, 130, 246, 0.1)', color: '#60a5fa' },
+  Collaborator:      { bg: 'rgba(34, 197, 94, 0.1)', color: '#4ade80' },
 };
 
 export default function AppShell({ children }) {
