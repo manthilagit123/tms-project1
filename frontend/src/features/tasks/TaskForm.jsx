@@ -33,9 +33,15 @@ export default function TaskForm({ onClose, onCreated, defaultProjectId }) {
         if (defaultProjectId) {
             values.project_id = defaultProjectId;
         }
-        await createTaskRequest(values);
-        onCreated();
-        onClose();
+        try {
+            await createTaskRequest(values);
+            onCreated();
+            onClose();
+        } catch (err) {
+            // Handle error so the UI doesn't hang on "Creating..."
+            // react-hook-form's isSubmitting will automatically revert to false
+            alert(err.message || 'Failed to create task');
+        }
     }
 
     const selectedAssignees = watch('assignees');

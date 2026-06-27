@@ -7,7 +7,7 @@ function attachIO(io) { ioInstance = io; }
 async function createNotification({ userId, message, type }) {
   const { data, error } = await supabase
     .from('Notifications')
-    .insert({ user_id: userId, message })
+    .insert({ user_id: userId, message, type })
     .select()
     .single();
   if (error) throw new ApiError(400, error.message);
