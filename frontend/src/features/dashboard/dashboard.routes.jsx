@@ -1,15 +1,15 @@
 import { Route } from 'react-router-dom';
-import TaskBoard from './TaskBoard';
+import Dashboard from './Dashboard';
 import ProtectedRoute from '../../routes/ProtectedRoute';
 import AppShell from '../../components/AppShell';
 
-export const taskRoutes = (
+export const dashboardRoutes = (
     <Route
-        path="/tasks"
+        path="/dashboard"
         element={
             <ProtectedRoute>
                 <AppShell>
-                    <TaskBoard />
+                    <Dashboard />
                 </AppShell>
             </ProtectedRoute>
         }

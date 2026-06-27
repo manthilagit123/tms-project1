@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { authRoutes } from '../features/auth/auth.routes';
 import { adminRoutes } from '../features/admin/admin.routes';
 import { taskRoutes } from '../features/tasks/task.routes';
+import { dashboardRoutes } from '../features/dashboard/dashboard.routes';
 
 export default function AppRoutes() {
     return (
@@ -10,6 +11,7 @@ export default function AppRoutes() {
             {authRoutes}
             {adminRoutes}
             {taskRoutes}
+            {dashboardRoutes}
             <Route
                 path="/403"
                 element={
